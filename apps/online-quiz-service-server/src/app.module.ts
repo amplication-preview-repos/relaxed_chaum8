@@ -6,6 +6,7 @@ import { QuestionModule } from "./question/question.module";
 import { RoomModule } from "./room/room.module";
 import { UserModule } from "./user/user.module";
 import { QuizManagementModule } from "./QuizManagement/quizmanagement.module";
+import { ReadMeModule } from "./ReadMe/readme.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -33,6 +34,7 @@ import { AuthModule } from "./auth/auth.module";
     RoomModule,
     UserModule,
     QuizManagementModule,
+    ReadMeModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,
