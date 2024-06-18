@@ -1,0 +1,83 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Player {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  room      Room?    @relation(fields: [roomId], references: [id])
+  roomId    String?
+  updatedAt DateTime @updatedAt
+  username  String?
+}
+
+model Quiz {
+  admin       Admin?     @relation(fields: [adminId], references: [id])
+  adminId     String?
+  createdAt   DateTime   @default(now())
+  description String?
+  id          String     @id @default(cuid())
+  questions   Question[]
+  rooms       Room[]
+  title       String?
+  updatedAt   DateTime   @updatedAt
+}
+
+model Admin {
+  createdAt DateTime @default(now())
+  email     String?
+  id        String   @id @default(cuid())
+  name      String?
+  password  String?
+  quizzes   Quiz[]
+  rooms     Room[]
+  updatedAt DateTime @updatedAt
+}
+
+model Question {
+  content       String?
+  correctAnswer EnumQuestionCorrectAnswer?
+  createdAt     DateTime                   @default(now())
+  id            String                     @id @default(cuid())
+  options       EnumQuestionOptions[]
+  quiz          Quiz?                      @relation(fields: [quizId], references: [id])
+  quizId        String?
+  updatedAt     DateTime                   @updatedAt
+}
+
+model Room {
+  admin     Admin?   @relation(fields: [adminId], references: [id])
+  adminId   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      String?
+  players   Player[]
+  quiz      Quiz?    @relation(fields: [quizId], references: [id])
+  quizId    String?
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+enum EnumQuestionCorrectAnswer {
+  Option1
+}
+
+enum EnumQuestionOptions {
+  Option1
+}
